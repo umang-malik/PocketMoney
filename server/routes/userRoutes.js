@@ -6,7 +6,7 @@ const Transactions = require('../models/userModel.js')
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
 
-// Handler to check if userId is senf along with api request
+// Handler to check if userId is send along with api request
 const checkUserId = function(req, res, next){
     if(!req.body.id){
         res.status(400)
