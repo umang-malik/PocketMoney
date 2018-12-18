@@ -54,8 +54,7 @@ router.post('/friends', checkUserId, function(req, res){
 router.post('/transactions', checkUserId, function(req, res){
     User.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
-            res.status(200)
-            res.send(currUser['friends'])
+            
         }
         else{
             res.status(404)

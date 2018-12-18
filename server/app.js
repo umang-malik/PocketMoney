@@ -1,5 +1,4 @@
 const express           = require('express')
-const db                = require('./db/db')
 const mongoose          = require('mongoose')
 const userRoutes        = require('./routes/userRoutes')
 const transactionRoutes = require('./routes/transactionRoutes')
