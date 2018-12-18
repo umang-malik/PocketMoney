@@ -7,7 +7,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 router.post('/', function(req, res){
     res.status(200)
-    res.send("Hi")  
+    res.send("Hi")
 })
 
 module.exports = router

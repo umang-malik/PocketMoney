@@ -1,6 +1,7 @@
-const router     = require('express').Router()
-const bodyParser = require('body-parser')
+const router       = require('express').Router()
+const bodyParser   = require('body-parser')
 const User         = require('../models/userModel.js')
+const Transactions = require('../models/userModel.js')
 
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -54,7 +55,18 @@ router.post('/friends', checkUserId, function(req, res){
 router.post('/transactions', checkUserId, function(req, res){
     User.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
-            
+            Transactions.find({
+                '_id': { $in: currUser['transactions']}
+            }, function(err, docs){
+                if(err){
+                    console.log(err)
+                    res.status(500)
+                    res.send("Internal Server Error")
+                } else{
+                    res.status(200)
+                    res.send(docs)
+                }
+            })
         }
         else{
             res.status(404)
