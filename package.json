@@ -1,0 +1,29 @@
+{
+  "name": "spliteasy",
+  "version": "1.0.0",
+  "description": "Inter IIT Tech meet 2018",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaithak/interiit.git"
+  },
+  "keywords": [
+    "spliteasy",
+    "interiit",
+    "iitkanpur"
+  ],
+  "author": "Vaibhav Thakkar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vaithak/interiit/issues"
+  },
+  "homepage": "https://github.com/vaithak/interiit#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.0"
+  }
+}
