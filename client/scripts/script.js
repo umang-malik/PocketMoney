@@ -13,7 +13,7 @@ $(document).ready(function () {
                     $.ajax({
                         url: "http://localhost:3000/api/user/addFriend",
                         headers: {
-                            "Access-Control-Allow-Origin": "http://localhost"
+                            "Access-Control-Allow-Origin": "*"
                         },
                         type: "POST",
                         data: {
@@ -36,7 +36,7 @@ $(document).ready(function () {
         $.ajax({
             url: "http://localhost:3000/api/user/friends",
             headers: {
-                "Access-Control-Allow-Origin": "http://localhost"
+                "Access-Control-Allow-Origin": "*"
             },
             type: "POST",
             data: {
@@ -60,7 +60,7 @@ $(document).ready(function () {
         $.ajax({
             url: "http://localhost:3000/api/user/transactions",
             headers: {
-                "Access-Control-Allow-Origin": "http://localhost:3000"
+                "Access-Control-Allow-Origin": "*"
             },
             type: "POST",
             data: {
