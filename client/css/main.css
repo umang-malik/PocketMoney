@@ -1,0 +1,12 @@
+.nav{
+    background-color: lightskyblue  !important;
+}
+
+.brand-logo{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1mm 
+}
+
+#userProfile{
+    opacity: 0.8;
+}
