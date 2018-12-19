@@ -2,6 +2,7 @@ const express           = require('express')
 const mongoose          = require('mongoose')
 const userRoutes        = require('./routes/userRoutes')
 const transactionRoutes = require('./routes/transactionRoutes')
+const expensesRoutes = require('./routes/expensesRoutes')
 const keys              = require('./config/keys')
 
 mongoose.promise = global.promise
@@ -23,6 +24,7 @@ mongoose.connect(keys.mongodb.dbURI, function(err) {
 // set up routes
 app.use('/api/user', userRoutes)
 app.use('/api/transactions', transactionRoutes)
+app.use('/api/expenses/', expensesRoutes)
 
 // Testing the api
 app.get('/api', function(req, res){

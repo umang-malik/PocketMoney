@@ -1,7 +1,7 @@
 const router       = require('express').Router()
 const bodyParser   = require('body-parser')
 const User         = require('../models/userModel.js')
-const Transactions = require('../models/userModel.js')
+const Transaction = require('../models/transactionModel.js')
 
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
