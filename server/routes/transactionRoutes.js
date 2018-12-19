@@ -18,26 +18,31 @@ const transactionReqHandler = function(req, res, next){
 }
 
 function updateTransactions(paidBy, index, splitRatio, currUsers, sum, transactionId, amount){
-    if(index == splitRatio.length){
-        User.findOneAndUpdate({Id: paidBy['Id']},{$set: {friends: paidBy['friends']}}).then(function(res){
+    console.log(index)
+    if(index === splitRatio.length){
+        User.findOneAndUpdate({Id: paidBy['Id']},paidBy,{new:true}).then(function(resp){
+            console.log(resp)
             return
         })
     } 
     else{
-        currUsers[index]['transactions'].push(transactionId)
-        for(var i=0;i<currUsers[index].length;i++){
-            if(currUsers[index]['friends'][i]['Id'] == paidBy['Id']){
-                currUsers[index]['friends'][i]['currBalance'] = currUsers[index]['friends'][i]['currBalance'] - ((splitRatio[index]*amount)/sum)
-                for(var j=0;j<paidBy['friends'].length;j++){
-                    if(paidBy['friends'][j]['Id'] == currUsers[index]['Id']){
-                        paidBy['friends'][j]['currBalance'] = paidBy['friends'][j]['currBalance'] + ((splitRatio[index]*amount)/sum)   
+        User.findOneAndUpdate({Id: currUsers[index]},{$push:{transactions: {"transactionId": transactionId}}},{new:true}).then(function(idUser){
+            for(var i=0; i<idUser['friends'].length; i++){
+                if(idUser['friends'][i].Id === paidBy['Id']){
+                    idUser['friends'][i].currBalance -= ((splitRatio[index]*amount/sum));
+                    // idUser['friends'][i].currBalance = 100
+                    for(var j=0;j<paidBy['friends'].length;j++){
+                        if(paidBy['friends'][j]['Id'] === idUser['Id']){
+                            paidBy['friends'][j].currBalance += ((splitRatio[index]*amount/sum));
+                        }
                     }
+                    break;
                 }
             }
-        }
-
-        User.findOneAndUpdate({Id: currUsers[index]['Id']},{$set: {friends: currUsers[index]['friends'], transactions: currUsers[index]['transactions']}}).then(function(res){
-            updateTransactions(paidBy, index+1, splitRatio, currUsers, sum, transactionId, amount)
+            console.log(idUser)
+            User.findOneAndUpdate({Id: currUsers[index]},idUser,()=>{
+                updateTransactions(paidBy, index+1, splitRatio, currUsers, sum, transactionId, amount)
+            })
         })
     }
 }
@@ -48,11 +53,12 @@ router.post('/new', transactionReqHandler, function(req, res){
     var sum = splitRatio.reduce(function(a, b) { return a + b; }, 0)
     var amount = req.body.amount
     for(var i=0; i<req.body.paidFor.length; i++){
-        if(req.body.paidFor[i] == req.body.paidBy){
+        if(req.body.paidFor[i] === req.body.paidBy){
             amount = amount - ((splitRatio[i]*amount)/sum)
             sum = sum - splitRatio[i];
             splitRatio = splitRatio.splice(i, 1)
-            req.body.paidFor = req.body.paidFor.splice(i, 1)
+            var paidForNew = req.body.paidFor
+            paidForNew.splice(i,1)
         }
     }
 
@@ -63,8 +69,8 @@ router.post('/new', transactionReqHandler, function(req, res){
             res.send("User does not exist")
         } else {
             //Check if all users exist-
-            User.find({Id: {$in: req.body.paidFor}}).then(function(currUsers){
-                if(!currUsers || currUsers.length != req.body.paidFor.length){
+            User.find({Id: {$in: paidForNew}}).then(function(currUsers){
+                if(!currUsers || currUsers.length != paidForNew.length){
                     res.status(404)
                     res.setHeader("Access-Control-Allow-Origin", "http://localhost")
                     res.send("Some user does not exist")
@@ -75,16 +81,13 @@ router.post('/new', transactionReqHandler, function(req, res){
                         paidBy: req.body.paidBy,
                         description: req.body.description,
                         splitRatio: splitRatio,
-                        paidFor: req.body.paidFor,
+                        paidFor: paidForNew,
                     }).save().then(function(result){
                         
                         paidBy['transactions'].push({
                             transactionId: result['_id']
                         })
-
-                        User.findOneAndUpdate({Id: paidBy['Id']},{$set: {transactions: paidBy['transactions']}}).then(function(res){
-                            updateTransactions(paidBy, 0, splitRatio, currUsers, sum, result['_id'], amount)
-                        })
+                        updateTransactions(paidBy, 0, splitRatio, paidForNew, sum, result['_id'], amount)
                 
                         res.status(200)
                         res.setHeader("Access-Control-Allow-Origin", "http://localhost")
