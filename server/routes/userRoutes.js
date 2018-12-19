@@ -106,8 +106,13 @@ router.post('/addFriend', checkUserId, function(req, res){
 router.post('/transactions', checkUserId, function(req, res){
     User.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
+            var transactionIdArr = []
+            for(var i=0; i<currUser['transactions'].length;i++){
+                transactionIdArr.push(currUser['transactions'][i]['transactionId'])
+            }
+            console.log(transactionIdArr)
             Transaction.find({
-                '_id': { $in: currUser['transactions']}
+                '_id': { $in: transactionIdArr}
             }, function(err, docs){
                 if(err){
                     console.log(err)
@@ -117,6 +122,7 @@ router.post('/transactions', checkUserId, function(req, res){
                 } else{
                     res.status(200)
                     res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                    console.log(docs)
                     res.send(docs)
                 }
             })
