@@ -41,13 +41,24 @@ $(document).ready(function () {
         success: function(result){
             console.log(result)
             for(var i=0;i<result.length;i++){
-                $("#transaction > .collection").append("<li class='collection-item avatar'>\
-                <i class='material-icons circle green' style='font-size: 30px'></i>\
-                <span class='title'></span>\
-                <p>Rs."+result[i]['amount']+"<br>\
-                    Second Line\
-                </p>\
-              </li>")
+                if(result[i]['paidBy'] === localStorage.getItem("Id")){
+                    $("#transaction > .collection").append("<li class='collection-item avatar'>\
+                    <i class='material-icons circle green' style='font-size: 30px'></i>\
+                    <span class='title'>You paid </span>\
+                    <p>Rs."+ result[i]['amount']+"<br>\
+                    to " + result[i]['paidFor'].join() + " \
+                    </p>\
+                    </li>")
+                }
+                else {
+                    $("#transaction > .collection").append("<li class='collection-item avatar'>\
+                    <i class='material-icons circle green' style='font-size: 30px'></i>\
+                    <span class='title'>You received </span>\
+                    <p>Rs."+result[i]['amount']+"<br>\
+                    from " + result[i]['paidBy'] + " \
+                    </p>\
+                    </li>")
+                }
             }
         },
         error: function(err){
