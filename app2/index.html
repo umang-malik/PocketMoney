@@ -1,0 +1,168 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <title>Add Item</title>
+</head>
+<body>
+
+  <div class="container">
+
+
+    <h2>Add Item</h2>
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#beauty"><img src="./icons/beauty.jpg"></a>
+    <div id="beauty" class="modal">
+      <div class="modal-content">
+        <h4>Beauty</h4>
+	  <form method="POST" id="frm1" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Beauty" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#bills"><img src="./icons/bills.jpg"></a>
+    <div id="bills" class="modal">
+      <div class="modal-content">
+        <h4>Bills</h4>
+	  <form method="POST" id="frm2" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Bills" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#clothing"><img src="./icons/clothing.jpg"></a>
+    <div id="clothing" class="modal">
+      <div class="modal-content">
+        <h4>Clothing</h4>
+          <input type="hidden" name="category" value="Clothing" />
+	  <form method="POST" id="frm3" action="http://10.159.0.165:3000/">
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#entertainment"><img src="./icons/entertainment.jpg"></a>
+    <div id="entertainment" class="modal">
+      <div class="modal-content">
+        <h4>Entertainment</h4>
+	  <form method="POST" id="frm4" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Entertainment" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#food"><img src="./icons/food.jpg"></a>
+    <div id="food" class="modal">
+      <div class="modal-content">
+        <h4>Food</h4>
+	  <form method="POST" id="frm5" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Food" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#gift"><img src="./icons/gift.jpg"></a>
+    <div id="gift" class="modal">
+      <div class="modal-content">
+        <h4>Gift</h4>
+	  <form method="POST" id="frm6" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Gift" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#shopping"><img src="./icons/shopping.jpg"></a>
+    <div id="shopping" class="modal">
+      <div class="modal-content">
+        <h4>Shopping</h4>
+	  <form method="POST" id="frm7" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Shopping" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#tax"><img src="./icons/tax.jpg"></a>
+    <div id="tax" class="modal">
+      <div class="modal-content">
+        <h4>Tax</h4>
+	  <form method="POST" id="frm8" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Tax" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#transportation"><img src="./icons/transportation.jpg"></a>
+    <div id="transportation" class="modal">
+      <div class="modal-content">
+        <h4>Transportation</h4>
+	  <form method="POST" id="frm9" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Transportation" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+
+    <a class="white modal-trigger" style="border:1px solid white; background-color: transparent;" href="#vegetables"><img src="./icons/vegetables.jpg"></a>
+    <div id="vegetables" class="modal">
+      <div class="modal-content">
+        <h4>Vegetables</h4>
+	  <form method="POST" id="frm10" action="http://10.159.0.165:3000/">
+          <input type="hidden" name="category" value="Vegetables" />
+      	  <div class="items" tabIndex="1"> Comments: <input type="text" name="comment" class="items"> </div> <br>
+          <div class="items" tabIndex="2"> Amount: <input type=number name="amount" step=0.01 value="0.00" class="items"> </div> <br>
+          <input type="submit"  value="Add">
+    	</form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+  </script>
+</body>
+</html>
