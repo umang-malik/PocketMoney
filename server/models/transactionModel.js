@@ -9,6 +9,6 @@ const transactionSchema = new Schema({
     includeSelf   : {type: Boolean,  required: true}    // Check if he also paid for himself
 }, {timestamps: true})
 
-const User = mongoose.model('transaction', transactionSchema)
+const Transaction = mongoose.model('transaction', transactionSchema)
 
-module.exports = Transactions
+module.exports = Transaction
