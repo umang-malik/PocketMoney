@@ -17,9 +17,9 @@ const checkUserId = function(req, res, next){
 
 // Endpoint for adding a new user.
 router.post('/newUser', checkUserId, function(req, res){
-    new User({
+    new expensesUser({
         Id  : req.body.id,
-        Name: req.body.name
+        name: req.body.name
     }).save().then(function(result){
         res.status(200)
         res.send("New user successfuly created!")
@@ -36,15 +36,17 @@ router.post('/newUser', checkUserId, function(req, res){
 router.post('/add', checkUserId, function(req, res){
    expensesUser.findOne({Id: req.body.id}).then(function(userObj){
         if(userObj && req.body.amount && req.body.category){
-            expensesUser.findOneAndUpdate({Id: req.body.id},{$set:{expenses: userObj['expenses'].push({
+            console.log(userObj['expenses'])
+            expensesUser.findOneAndUpdate({Id: req.body.id},{$push:{expenses:{
                 category: req.body.category,
                 amount: req.body.amount,
                 comment: (req.body.comment===undefined)?"":(req.body.comment)
-            })},expenditure:userObj.expenses+req.body.amount }).then(function(idUser){
-                console.log("New item")
-                console.log(IdUser)
-                res.status = 200;
-                res.send("New item added");
+            }}}).then(function(idUser){
+                expensesUser.findOneAndUpdate({Id: req.body.id},{$set:{expenditure : userObj.expenditure + req.body.amount}}).then(function(idUser){
+                    console.log("New item")
+                    res.status = 200;
+                    res.send("New item added");
+                })
             })
         } else {
             res.status = 404;
@@ -58,7 +60,7 @@ router.post('/add', checkUserId, function(req, res){
 });
 
 //Endpoint for viewing a user's expenses.
-router.post('view', checkUserId, function(req, res){
+router.post('/view', checkUserId, function(req, res){
     expensesUser.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
             res.status(200)

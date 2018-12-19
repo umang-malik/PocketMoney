@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const expensesUserSchema = new Schema({
     Id          :  {type: String, required: true, unique: true},
+    name : {type: String, required: true},
     expenses    :  {type: [
         {
             category  : String,
