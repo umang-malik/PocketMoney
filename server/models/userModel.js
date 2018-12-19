@@ -3,7 +3,7 @@ const Schema   = mongoose.Schema
 
 const userSchema = new Schema({
     Id              :  {type: String, required: true, unique: true},
-    Name            :  {type: String, required: true},
+    Name            :  {type: String, required: true, unique: true},
     
     transactions    :  {type: [
         {
@@ -13,7 +13,7 @@ const userSchema = new Schema({
 
     friends         :  {type: [
         {
-        Id          : {type: String, required: true, unique: true},
+        Id          : {type: String, required: true},
         Name        : {type: String, required: true},
         currBalance : {type: Number, required: true} // Positive => Friend owes this user
         },

@@ -27,6 +27,7 @@ app.use('/api/transactions', transactionRoutes)
 // Testing the api
 app.get('/api', function(req, res){
     res.status(200)
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000")
     res.send("Hello from SpliEasy API!")
 })
 

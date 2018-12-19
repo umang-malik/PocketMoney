@@ -37,7 +37,52 @@ router.post('/friends', checkUserId, function(req, res){
     User.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
             res.status(200)
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000")
             res.send(currUser['friends'])
+        }
+        else{
+            res.status(404)
+            res.send("User does not exist")
+        }
+    })
+    .catch(function(err){
+        console.log(err)
+        res.status(500)
+        res.send("Internal Server Error")
+    })
+})
+
+// Endpoint for retreiving user's friends details
+router.post('/addFriend', checkUserId, function(req, res){
+    User.findOne({Id: req.body.id}).then(function(currUser){
+        if(currUser){
+            var friendToAdd = req.body.friendName
+            User.findOne({"Name": friendToAdd}).then(function(friendUser){
+                if(friendUser && currUser!=friendUser){
+                    currUser['friends'].push({
+                        "Id": friendUser['Id'],
+                        "Name": friendUser['Name'],
+                        "currBalance": 0
+                    })
+                    friendUser['friends'].push({
+                        "Id": currUser['Id'],
+                        "Name": currUser['Name'],
+                        "currBalance": 0
+                    })
+                    User.findOneAndUpdate({Id: currUser['Id']},{$set:{friends: currUser['friends']}}).then(function(result){
+                        User.findOneAndUpdate({Id: friendUser['Id']},{$set:{friends: friendUser['friends']}}).then(function(resut){
+                            res.status(200)
+                            res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000")
+                            res.send("Succesfully Added A friend")
+                        })
+                    })
+                } else{
+                    res.status(400)
+                    res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000")
+                    res.send("No Such User Exists!")
+                }
+
+            })
         }
         else{
             res.status(404)
@@ -64,6 +109,7 @@ router.post('/transactions', checkUserId, function(req, res){
                     res.send("Internal Server Error")
                 } else{
                     res.status(200)
+                    res.setHeader("Access-Control-Allow-Origin", "http://localhost:8000")
                     res.send(docs)
                 }
             })
