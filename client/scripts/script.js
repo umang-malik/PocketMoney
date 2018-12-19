@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if(localStorage.getItem("Id").length == 0){
+    if(!localStorage.getItem("Id")){
         window.location = "login.html"
     }
     $("#userName").html(localStorage.getItem("Name"))
@@ -15,12 +15,11 @@ $(document).ready(function () {
             id  : localStorage.getItem("Id"),
         },
         success: function(result){
-            for(friend in result){
+            for(var i=0; i<result.length; i++){
                 $("#friends > .collection").append("<li class='collection-item avatar'>\
-                <img src = 'https://www.gravatar.com/avatar/" + friend['Id'] + "?d=robohash' style=\"background-color: white; \"'> \
-                <span class='title'>Title</span>\
-                <p>First Line <br>\
-                   Second Line\
+                <img src = 'https://www.gravatar.com/avatar/" + result[i]['Id'] + "?d=robohash' style=\"background-color: white; \"' class='circle'>\
+                <span class='title'>"+result[i].Name+" owes you </span>\
+                <p>" + "Rs."+result[i]['currBalance']+ "\
                 </p>\
               </li>")
             }
@@ -40,14 +39,26 @@ $(document).ready(function () {
             id  : localStorage.getItem("Id"),
         },
         success: function(result){
-            for(transaction in result){
-                $("#friends > .collection").append("<li class='collection-item avatar'>\
-                <i class='material-icons circle green' style='font-size: 30px'>swap_horiz</i>\
-                <span class='title'></span>\
-                <p>First Line <br>\
-                    Second Line\
-                </p>\
-              </li>")
+            console.log(result)
+            for(var i=0;i<result.length;i++){
+                if(result[i]['paidBy'] === localStorage.getItem("Id")){
+                    $("#transaction > .collection").append("<li class='collection-item avatar'>\
+                    <i class='material-icons circle green' style='font-size: 30px'></i>\
+                    <span class='title'>You paid </span>\
+                    <p>Rs."+ result[i]['amount']+"<br>\
+                    to " + result[i]['paidFor'].join() + " \
+                    </p>\
+                    </li>")
+                }
+                else {
+                    $("#transaction > .collection").append("<li class='collection-item avatar'>\
+                    <i class='material-icons circle green' style='font-size: 30px'></i>\
+                    <span class='title'>You received </span>\
+                    <p>Rs."+result[i]['amount']+"<br>\
+                    from " + result[i]['paidBy'] + " \
+                    </p>\
+                    </li>")
+                }
             }
         },
         error: function(err){

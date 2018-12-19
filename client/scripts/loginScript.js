@@ -20,7 +20,23 @@ $("#loginButton").on('click', function(e){
             name: localStorage.getItem("Name")
         },
         success: function(result){
-            window.location= "index.html"
+            $.ajax({
+                url: "http://localhost:3000/api/expenses/newUser",
+                headers: {
+                    "Access-Control-Allow-Origin": "http://localhost:3000"
+                },
+                type: "POST",
+                data: {
+                    id  : localStorage.getItem("Id"),
+                    name: localStorage.getItem("Name")
+                },
+                success: function(result){
+                    window.location= "index.html"
+                },
+                error: function(err){
+                    alert(err)
+                }
+            })
         },
         error: function(err){
             alert(err)

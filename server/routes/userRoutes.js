@@ -123,7 +123,6 @@ router.post('/transactions', checkUserId, function(req, res){
         }
         else{
             res.status(404)
-            
             res.send("User does not exist")
         }
     })
