@@ -18,22 +18,28 @@ const transactionReqHandler = function(req, res, next){
 }
 
 function updateTransactions(paidBy, index, splitRatio, currUsers, sum, transactionId, amount){
-    if(index == splitRatio.length)
-        return
-    
-    currUsers[index]['transactions'].push(transactionId)
-    for(var i=0;i<currUsers[index].length;i++){
-        if(currUsers[index]['friends'][i]['Id'] == paidBy['Id']){
-            currUsers[index]['friends'][i]['currBalance'] = currUsers[index]['friends'][i]['currBalance'] - ((splitRatio[index]*amount)/sum)
-            for(var j=0;j<paidBy['friends'].length;j++){
-                if(paidBy['friends'][j]['Id'] == currUsers[index]['Id']){
-                    paidBy['friends'][j]['currBalance'] = paidBy['friends'][j]['currBalance'] + ((splitRatio[index]*amount)/sum)   
+    if(index == splitRatio.length){
+        User.findOneAndUpdate({Id: paidBy['Id']},{$set: {friends: paidBy['friends']}}).then(function(res){
+            return
+        })
+    } 
+    else{
+        currUsers[index]['transactions'].push(transactionId)
+        for(var i=0;i<currUsers[index].length;i++){
+            if(currUsers[index]['friends'][i]['Id'] == paidBy['Id']){
+                currUsers[index]['friends'][i]['currBalance'] = currUsers[index]['friends'][i]['currBalance'] - ((splitRatio[index]*amount)/sum)
+                for(var j=0;j<paidBy['friends'].length;j++){
+                    if(paidBy['friends'][j]['Id'] == currUsers[index]['Id']){
+                        paidBy['friends'][j]['currBalance'] = paidBy['friends'][j]['currBalance'] + ((splitRatio[index]*amount)/sum)   
+                    }
                 }
             }
         }
-    }
 
-    updateTransactions(paidBy, index+1, splitRatio, currUsers, sum, transactionId, amount)
+        User.findOneAndUpdate({Id: currUsers[index]['Id']},{$set: {friends: currUsers[index]['friends'], transactions: currUsers[index]['transactions']}}).then(function(res){
+            updateTransactions(paidBy, index+1, splitRatio, currUsers, sum, transactionId, amount)
+        })
+    }
 }
 
 // Endpoint for making a new transaction
@@ -45,8 +51,8 @@ router.post('/new', transactionReqHandler, function(req, res){
         if(req.body.paidFor[i] == req.body.paidBy){
             amount = amount - ((splitRatio[i]*amount)/sum)
             sum = sum - splitRatio[i];
-            splitRatio.splice(i, 1)
-            req.body.paidFor.splice(i, 1)
+            splitRatio = splitRatio.splice(i, 1)
+            req.body.paidFor = req.body.paidFor.splice(i, 1)
         }
     }
 
@@ -71,9 +77,14 @@ router.post('/new', transactionReqHandler, function(req, res){
                         splitRatio: splitRatio,
                         paidFor: req.body.paidFor,
                     }).save().then(function(result){
-                        // console.log(currUsers)
+                        
+                        paidBy['transactions'].push({
+                            transactionId: result['_id']
+                        })
 
-                        updateTransactions(paidBy, 0, splitRatio, currUsers, sum, result['_id'], amount)
+                        User.findOneAndUpdate({Id: paidBy['Id']},{$set: {transactions: paidBy['transactions']}}).then(function(res){
+                            updateTransactions(paidBy, 0, splitRatio, currUsers, sum, result['_id'], amount)
+                        })
                 
                         res.status(200)
                         res.setHeader("Access-Control-Allow-Origin", "http://localhost")

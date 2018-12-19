@@ -58,7 +58,7 @@ router.post('/friends', checkUserId, function(req, res){
 
 // Endpoint for retreiving user's friends details
 router.post('/addFriend', checkUserId, function(req, res){
-    User.findOne({Id: req.body.id}).then(function(currUser){
+    User.findOne({Name: req.body.friendName}).then(function(currUser){
         if(currUser){
             var friendToAdd = req.body.friendName
             User.findOne({"Name": friendToAdd}).then(function(friendUser){
