@@ -47,7 +47,6 @@ $(document).ready(function () {
                     $("#friends > .collection").append("<li class='collection-item avatar'>\
                     <img src = 'https://www.gravatar.com/avatar/" + result[i]['Id'] + "?d=robohash' style=\"background-color: white; \"' class='circle'>\
                     <span class='title'>"+result[i].Name+" owes you </span>\
-                    <a class='btn-floating btn-medium waves-effect waves-light green right'><i class='material-icons transBut' >add</i></a>\
                     <p>" + "Rs."+result[i]['currBalance']+ "\
                     </p>\
                 </li>")
@@ -95,11 +94,4 @@ $(document).ready(function () {
             }
         })
         }
-    
-    $('.transBut').click(function(e){
-        e.preventDefault()
-        list = $(this)
-        console.log("hi" )
-        // list.get
-    })
 })

@@ -51,6 +51,13 @@
     <div id="transaction" class="col s12">
         <ul class="collection">
         </ul>
+        <form action="localhost:3000/api/transactions/new" method="POST"></form>
+        <input type="text" placeholder="Add amount" name="amount">
+        <input type="text" placeholder="Add Your Id" name="paidBy">
+        <input type="text" placeholder="Add Your description" name="description">
+        <input type="text" placeholder="Add 1st Id" name="paidFor[0]">
+        <input type="hidden" name="splitRatio[0]" value="1"/>
+        <button class="newTrans" type="submit">New Transaction</button>
     </div>
 
 
