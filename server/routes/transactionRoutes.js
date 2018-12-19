@@ -10,6 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 const transactionReqHandler = function(req, res, next){
     if(req.body.amount == undefined || (!req.body.paidBy) || (!req.body.paidFor)){
         res.status(400)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("User Id not sent!")
     } else {
         next()
@@ -20,7 +21,7 @@ const transactionReqHandler = function(req, res, next){
 router.post('/new', transactionReqHandler, function(req, res){
     var includeSelf = false;
     if(req.body.paidFor.includes(req.body.paidBy)){
-        includeSelf = true;
+        includeSelf = true
     }
 
     //Check if all users exist-
@@ -28,19 +29,22 @@ router.post('/new', transactionReqHandler, function(req, res){
         User.findOne({Id: friend}).then(function(currUser){
             if(!currUser){
                 res.status(404)
+                res.setHeader("Access-Control-Allow-Origin", "http://localhost")
                 res.send("Friend does not exist");
             }
         })
         .catch(function(err){
             console.log(err)
             res.status(500)
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
             res.send("Internal Server Error")
         })
     });
     User.findOne({Id: req.body.paidBy}).then(function(paidBy){
         if(!paidBy){
             res.status(404)
-            res.send("User does not exist");
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+            res.send("User does not exist")
         } else {
             new Transaction({
                 amount: req.body.amount,
@@ -54,11 +58,13 @@ router.post('/new', transactionReqHandler, function(req, res){
                 
         
                 res.status(200)
+                res.setHeader("Access-Control-Allow-Origin", "http://localhost")
                 res.send("New transaction successfully created!")
             })
             .catch(function(err){
                 console.log(err)
                 res.status(500)
+                res.setHeader("Access-Control-Allow-Origin", "http://localhost")
                 res.send("Internal Server Error")
             });
         }
@@ -66,6 +72,7 @@ router.post('/new', transactionReqHandler, function(req, res){
     .catch(function(err){
         console.log(err)
         res.status(500)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("Internal Server Error")
     })
     

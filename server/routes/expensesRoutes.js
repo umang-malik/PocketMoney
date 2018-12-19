@@ -9,6 +9,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 const checkUserId = function(req, res, next){
     if(!req.body.id){
         res.status(400)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("User Id not sent!")
     } else {
         next()
@@ -22,11 +23,13 @@ router.post('/newUser', checkUserId, function(req, res){
         name: req.body.name
     }).save().then(function(result){
         res.status(200)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("New user successfuly created!")
     })
     .catch(function(err){
         console.log(err)
         res.status(500)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("Internal Server Error")
     })
 })
@@ -44,12 +47,14 @@ router.post('/add', checkUserId, function(req, res){
             }}}).then(function(idUser){
                 expensesUser.findOneAndUpdate({Id: req.body.id},{$set:{expenditure : userObj.expenditure + req.body.amount}}).then(function(idUser){
                     console.log("New item")
-                    res.status = 200;
+                    res.status = 200
+                    res.setHeader("Access-Control-Allow-Origin", "http://localhost")
                     res.send("New item added");
                 })
             })
         } else {
-            res.status = 404;
+            res.status = 404
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
             res.send("User not found or field missing");
         }
    }).catch(function(err){
@@ -64,15 +69,18 @@ router.post('/view', checkUserId, function(req, res){
     expensesUser.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
             res.status(200)
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
             res.send(currUser)
         }
         else{
             res.status(404)
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
             res.send("User does not exist")
         }
     }).catch(function(err){
         console.log(err)
         res.status(500)
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
         res.send("Internal Server Error")
     })
 })    
