@@ -2,44 +2,34 @@ $(document).ready(function () {
     if(!localStorage.getItem("Id")){
         window.location = "login.html"
     }
-
-    $('#friendInput').keyup(function(e){
-        if(e.keyCode == 13)
-        {
-            var text = $("#friendInput").val()
-            if(!text){
-                $("#friendInput").val("")
-            } else{
-                $.ajax({
-                    url: "http://localhost:3000/api/user/addFriend",
-                    headers: {
-                        "Access-Control-Allow-Origin": "http://localhost"
-                    },
-                    type: "POST",
-                    data: {
-                        friendName: text,
-                        id  : localStorage.getItem("Id")
-                    },
-                    success: function(result){
-                        for(var i=0; i<result.length; i++){
-                            $("#friends > .collection").append("<li class='collection-item avatar'>\
-                            <img src = 'https://www.gravatar.com/avatar/" + result[i]['Id'] + "?d=robohash' style=\"background-color: white; \"' class='circle'>\
-                            <span class='title'>"+result[i].Name+" owes you </span>\
-                            <p>" + "Rs."+result[i]['currBalance']+ "\
-                            </p>\
-                        </li>")
-                        }
-                    },
-                    error: function(err){
-                        alert(err)
-                    }
-                })
-            }
-        }
-      });
-
     else{
-        console.log("hi")
+        $('#friendInput').keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                var text = $("#friendInput").val()
+                if(!text){
+                    $("#friendInput").val("")
+                } else{
+                    $.ajax({
+                        url: "http://localhost:3000/api/user/addFriend",
+                        headers: {
+                            "Access-Control-Allow-Origin": "http://localhost"
+                        },
+                        type: "POST",
+                        data: {
+                            friendName: text,
+                            id  : localStorage.getItem("Id")
+                        },
+                        success: function(result){
+                            location.reload(true)
+                        },
+                        error: function(err){
+                            alert(err)
+                        }
+                    })
+                }
+            }
+          })
         $("#userName").html(localStorage.getItem("Name"))
         $(".button-collapse").sideNav()
 
