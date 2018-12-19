@@ -10,7 +10,7 @@ router.use(bodyParser.urlencoded({ extended: true }))
 const transactionReqHandler = function(req, res, next){
     if((req.body.amount == undefined) || (!req.body.paidBy) || (!req.body.paidFor) || (!req.body.splitRatio) ){
         res.status(400)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("User Id not sent!")
     } else {
         next()
@@ -65,14 +65,14 @@ router.post('/new', transactionReqHandler, function(req, res){
     User.findOne({Id: req.body.paidBy}).then(function(paidBy){
         if(!paidBy){
             res.status(404)
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+            res.setHeader("Access-Control-Allow-Origin", "*")
             res.send("User does not exist")
         } else {
             //Check if all users exist-
             User.find({Id: {$in: paidForNew}}).then(function(currUsers){
                 if(!currUsers || currUsers.length != paidForNew.length){
                     res.status(404)
-                    res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                    res.setHeader("Access-Control-Allow-Origin", "*")
                     res.send("Some user does not exist")
                     return false
                 } else{
@@ -90,7 +90,7 @@ router.post('/new', transactionReqHandler, function(req, res){
                         updateTransactions(paidBy, 0, splitRatio, paidForNew, sum, result['_id'], amount)
                 
                         res.status(200)
-                        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                        res.setHeader("Access-Control-Allow-Origin", "*")
                         res.send("New transaction successfully created!")
                     })
                 }

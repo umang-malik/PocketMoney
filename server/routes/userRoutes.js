@@ -23,13 +23,13 @@ router.post('/new', checkUserId, function(req, res){
         Name: req.body.name
     }).save().then(function(result){
         res.status(200)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("New user successfuly created!")
     })
     .catch(function(err){
         console.log(err)
         res.status(500)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("Internal Server Error")
     })
 })
@@ -39,19 +39,19 @@ router.post('/friends', checkUserId, function(req, res){
     User.findOne({Id: req.body.id}).then(function(currUser){
         if(currUser){
             res.status(200)
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+            res.setHeader("Access-Control-Allow-Origin", "*")
             res.send(currUser['friends'])
         }
         else{
             res.status(404)
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+            res.setHeader("Access-Control-Allow-Origin", "*")
             res.send("User does not exist")
         }
     })
     .catch(function(err){
         console.log(err)
         res.status(500)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("Internal Server Error")
     })
 })
@@ -76,13 +76,13 @@ router.post('/addFriend', checkUserId, function(req, res){
                     User.findOneAndUpdate({Id: currUser['Id']},{$set:{friends: currUser['friends']}}).then(function(result){
                         User.findOneAndUpdate({Id: friendUser['Id']},{$set:{friends: friendUser['friends']}}).then(function(resut){
                             res.status(200)
-                            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                            res.setHeader("Access-Control-Allow-Origin", "*")
                             res.send("Succesfully Added A friend")
                         })
                     })
                 } else{
                     res.status(400)
-                    res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                    res.setHeader("Access-Control-Allow-Origin", "*")
                     res.send("No Such User Exists!")
                 }
 
@@ -90,14 +90,14 @@ router.post('/addFriend', checkUserId, function(req, res){
         }
         else{
             res.status(404)
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+            res.setHeader("Access-Control-Allow-Origin", "*")
             res.send("User does not exist")
         }
     })
     .catch(function(err){
         console.log(err)
         res.status(500)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("Internal Server Error")
     })
 })
@@ -117,11 +117,11 @@ router.post('/transactions', checkUserId, function(req, res){
                 if(err){
                     console.log(err)
                     res.status(500)
-                    res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                    res.setHeader("Access-Control-Allow-Origin", "*")
                     res.send("Internal Server Error")
                 } else{
                     res.status(200)
-                    res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+                    res.setHeader("Access-Control-Allow-Origin", "*")
                     console.log(docs)
                     res.send(docs)
                 }
@@ -135,7 +135,7 @@ router.post('/transactions', checkUserId, function(req, res){
     .catch(function(err){
         console.log(err)
         res.status(500)
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost")
+        res.setHeader("Access-Control-Allow-Origin", "*")
         res.send("Internal Server Error")
     })
 })
